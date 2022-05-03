@@ -78,11 +78,11 @@ def create_dataset(dataset, config):
         return train_dataset, val_dataset, test_dataset
 
     elif dataset == 'vqa':
-        train_dataset = vqa_dataset(config['train_file'], train_transform_wohflip, config['vqa_root'], config['vg_root'],
-                                    split='train', text_encoder=config['text_encoder'], use_roberta=config['use_roberta'])
+        #train_dataset = vqa_dataset(config['train_file'], train_transform_wohflip, config['vqa_root'], config['vg_root'],
+        #                            split='train', text_encoder=config['text_encoder'], use_roberta=config['use_roberta'])
         vqa_test_dataset = vqa_dataset(config['test_file'], test_transform, config['vqa_root'], config['vg_root'],
                                        split='test', answer_list=config['answer_list'], text_encoder=config['text_encoder'], use_roberta=config['use_roberta'])
-        return train_dataset, vqa_test_dataset
+        return vqa_test_dataset, vqa_test_dataset
 
     elif dataset == 'nlvr_pretrain':
         general_dataset = ImageTextJsonDataset(config, config['train_file'], rank=int(os.environ.get('RANK') or 0),
@@ -124,9 +124,9 @@ def create_dataset(dataset, config):
             normalize,
         ])
 
-        train_dataset = grounding_dataset_bbox(config['train_file'], train_transform, config['image_root'], mode='train', config=config)
+        train_dataset = [] #grounding_dataset_bbox(config['train_file'], train_transform, config['image_root'], mode='train', config=config)
         test_dataset = grounding_dataset_bbox(config['test_file'], test_transform, config['image_root'], mode='test', config=config)
-        return train_dataset, test_dataset
+        return test_dataset, test_dataset
 
     elif dataset == 'captioning_pretrain':
         general_dataset = ImageTextJsonDataset(config, config['train_file'], rank=int(os.environ.get('RANK') or 0),

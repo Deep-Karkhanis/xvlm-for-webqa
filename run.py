@@ -13,7 +13,7 @@ from utils.hdfs_io import HADOOP_BIN, hexists, hmkdir, hcopy
 
 ############ Set it correctly for distributed training across nodes
 NNODES = 1  # e.g. 1/2/3/4
-NPROC_PER_NODE = 8  # e.g. 8 gpus
+NPROC_PER_NODE = 1  # e.g. 8 gpus
 
 MASTER_ADDR = 'SET_IT'
 MASTER_PORT = 12345
@@ -166,11 +166,13 @@ def run_itr_coco():
 def run_vqa(args):
     dist_launch = get_dist_launch(args)
 
-    assert os.path.exists("images/coco") and os.path.exists("images/visualgenome")
+    #assert os.path.exists("images/coco") and os.path.exists("images/visualgenome")
 
     print("### Training VQA", flush=True)
     if not os.path.exists(args.config): args.config = './configs/VQA.yaml'
-
+    
+    print(args.config)
+    
     os.system(f"{dist_launch} "
               f"--use_env VQA.py --config {args.config} "
               f"{f'--output_hdfs {args.output_hdfs}' if len(args.output_hdfs) else ''} --output_dir {args.output_dir} "

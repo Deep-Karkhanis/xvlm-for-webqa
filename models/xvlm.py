@@ -22,6 +22,7 @@ from models.xroberta import RobertaConfig, RobertaForMaskedLM, RobertaModel
 
 from utils import read_json
 
+import _pickle as cPickle
 
 class AllGather(torch.autograd.Function):
     """An autograd function that performs allgather on a tensor."""
@@ -464,7 +465,7 @@ class XVLMBase(nn.Module):
                                  labels=masked_ids,
                                  masked_pos=masked_pos).loss
 
-    def predict_bbox(self, image_embeds, text_embeds, text_atts):
+    def predict_bbox(self, image_embeds, text_embeds, text_atts, save_filename):
         """
         Args:
             image_embeds: encoding full images
@@ -476,6 +477,10 @@ class XVLMBase(nn.Module):
 
         output_cls = self.get_cross_embeds(image_embeds, torch.ones(image_embeds.shape[:2]).to(image_embeds.device),
                                            text_embeds=text_embeds, text_atts=text_atts)[:, 0, :]
+        
+        with open(save_filename, "wb") as output_file:
+            cPickle.dump(output_cls, output_file)
+
         output_coord = self.bbox_head(output_cls).sigmoid()
 
         return output_coord

@@ -32,6 +32,8 @@ class DistLineReadingDataset(IterableDataset):  # pylint: disable=W0223
         self.world_size = world_size
 
         self.files = hlist_files(data_path.split(','))
+        print("self.files", self.files)
+        print("data_path", data_path)
         self.files = [f for f in self.files if f.find('_SUCCESS') < 0]
         self.is_hdfs = data_path.startswith('hdfs')
 

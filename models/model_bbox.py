@@ -15,11 +15,14 @@ class XVLM(XVLMBase):
         print("missing_keys: ", [p for p in msg.missing_keys if 'vision_encoder' not in p])
         print("unexpected_keys: ", msg.unexpected_keys)
 
-    def forward(self, image, text_ids, text_atts, target_bbox=None):
+    def forward(self, image, text_ids, text_atts, ref_ids, target_bbox=None):
         image_embeds, _ = self.get_vision_embeds(image)
         text_embeds = self.get_text_embeds(text_ids, text_atts)
-
-        output_coord = self.predict_bbox(image_embeds, text_embeds, text_atts)
+        
+        print("===================") 
+        print(int(ref_ids[0]))
+        print("===================") 
+        output_coord = self.predict_bbox(image_embeds, text_embeds, text_atts, "/home/deepk/xvlm/X-VLM/images/webqa/feats/"+str(int(ref_ids[0]))+".pickle")
         # output_coord & target_bbox: 64, 4
 
         if target_bbox is None:

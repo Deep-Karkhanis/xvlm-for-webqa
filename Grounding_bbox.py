@@ -73,7 +73,8 @@ def val(model, data_loader, tokenizer, device):
         text_input = tokenizer(text, padding='longest', return_tensors="pt").to(device)
 
         with torch.no_grad():
-            outputs_coord = model(image, text_input.input_ids, text_input.attention_mask, target_bbox=None)
+            outputs_coord = model(image, text_input.input_ids, text_input.attention_mask, ref_ids, target_bbox=None)
+            print(outputs_coord)
 
         assert len(ref_ids) == outputs_coord.shape[0]
 

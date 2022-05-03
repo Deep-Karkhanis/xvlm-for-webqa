@@ -1,0 +1,5 @@
+name: xvlm
+channels:
+  - defaults
+prefix: /home/deepk/anaconda3/envs/xvlm
+

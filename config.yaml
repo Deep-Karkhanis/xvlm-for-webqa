@@ -1,0 +1,30 @@
+accelerator: {CLIP_GRAD_NORM: 1.0, FP16_LOSS_SCALE: dynamic, FP16_OPT_LEVEL: O1, GRAD_ACCUMULATE_STEPS: 1,
+  RNG_SEED: 42, SYNCBN: false}
+calc_image_bbox_loss: false
+coco_file: data/finetune/refcoco+/cocos.json
+det_file: data/finetune/refcoco+/dets.json
+image_res: 224
+image_root: images/coco/
+load_bertL_by_sep: false
+mask_prob: 0.25
+mask_whole_word: true
+max_masks: 8
+max_tokens: 40
+max_words: 40
+optimizer: {lr: 3e-05, lr_mult: 2, opt: adamW, weight_decay: 0.01}
+patch_size: 32
+refcoco_data: data/finetune/
+regions: {batch_size: 24, caption_key: caption, image_key: binary, is_image_rpath: false,
+  iter_perc: 1.0, max_images: 9, max_regions: 5, min_perc_in_image: 0.5, num_workers: 4,
+  tokenized: false}
+schedular: {epochs: 2, lr: 3e-05, num_warmup_steps: 0.1, sched: linear}
+skipgram_prb: 0.2
+skipgram_size: 3
+text_config: configs/config_bert.json
+text_encoder: data/bert-base-uncased
+train_dataset_size: 318547
+train_file_regions: [hdfs://path/to/coco_objs, hdfs://path/to/vg_objs, hdfs://path/to/vg_regions]
+use_clip_vit: false
+use_roberta: false
+use_swin: true
+vision_config: configs/config_swinB_224.json
