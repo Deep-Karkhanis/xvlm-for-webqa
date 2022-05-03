@@ -1,3 +1,5 @@
+Original [X-VLM repository](https://github.com/zengyan-97/X-VLM/tree/f69044712ed840be013ec55c864f1bc3ada0b34c) modified for use on WebQA dataset
+
 # X-VLM: learning multi-grained vision language alignments
 
 
